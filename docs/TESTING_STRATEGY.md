@@ -34,6 +34,10 @@ Implemented tests:
 - `send_config_validation`
   - verifies oversized timeout values are rejected at the CLI parsing layer.
 
+The external RTM mentions GoogleTest, DICOM conformance tests, integration
+tests, load tests, and regression suites. Those are not present yet. The
+current test system is plain CTest with small C++ executables.
+
 ## How To Run Tests
 
 Configure and build:
@@ -101,11 +105,13 @@ Integration tests should be added when real services exist.
 Future integration tests should cover:
 
 - C-ECHO SCU against a local DCMTK `echoscp` or `storescp`;
+- C-ECHO SCP against a real `echoscu`;
 - C-STORE SCP receiving from DCMTK `storescu`;
 - local storage writing and file layout;
 - DICOM file reader plus storage plus metadata index;
 - C-FIND SCP responses from indexed metadata;
 - C-MOVE SCP retrieval to a local destination SCP.
+- security/audit workflows after those modules exist.
 
 Integration tests may start local processes on test ports, but they must clean
 up processes and files reliably.
@@ -138,6 +144,23 @@ Forbidden fake-success patterns:
 
 Protocol behavior should be tested against real DCMTK code paths or a real
 local DCMTK peer whenever the milestone is about DICOM networking.
+
+## RTM-Driven Final Test Scope
+
+The attached RTM/SKS documents imply the following future test groups:
+
+- DIMSE integration tests: C-ECHO SCP/SCU, C-STORE SCP/SCU, C-FIND, C-MOVE.
+- Storage tests: local layout, readback, duplicate handling, invalid path
+  handling, checksum/integrity checks if implemented.
+- Index tests: insert, update, lookup, wildcard matching, query levels.
+- DICOMweb tests: QIDO-RS, WADO-RS, WADO-URI, STOW-RS, multipart handling.
+- Security tests: AE whitelist, DICOM TLS, authentication, RBAC, account
+  lockout.
+- Audit tests: required audit events, immutable retention behavior, export.
+- Performance tests: C-STORE latency, C-FIND latency, concurrent associations,
+  daily instance throughput.
+- Compliance tests: release regression suite, DICOM conformance validation,
+  traceability from requirements to tests.
 
 ## AI Agent Testing Rules
 

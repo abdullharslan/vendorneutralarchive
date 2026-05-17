@@ -37,6 +37,7 @@ Current CLI behavior:
 
 Planned roadmap items:
 
+- C-ECHO SCP;
 - C-STORE SCP receiver;
 - local file storage for received instances;
 - metadata index;
@@ -60,6 +61,7 @@ and milestone completion notes explicitly say so.
 
 The following are out of scope in the current codebase:
 
+- C-ECHO SCP;
 - C-STORE SCP request handling;
 - C-STORE SCU file transfer;
 - C-FIND;
@@ -74,6 +76,10 @@ The following are out of scope in the current codebase:
 - PostgreSQL;
 - UI;
 - fake DICOM success responses.
+
+The attached RTM/SKS documents include many additional DICOM services marked as
+complete for a broader target system. In this repository, they remain planned or
+out of scope until implemented and tested here.
 
 ## DCMTK Isolation Rules
 
@@ -119,7 +125,7 @@ Currently, DCMTK is used in:
 
 ### C-ECHO
 
-Current status: implemented as SCU only.
+Current status: implemented as SCU only. C-ECHO SCP is not implemented.
 
 Constraints:
 
@@ -141,6 +147,19 @@ Planned constraints:
 - File persistence should go through a storage abstraction.
 - The DICOM networking class should not own metadata indexing or database
   concerns directly.
+
+### DICOMweb
+
+Current status: not implemented.
+
+Planned constraints:
+
+- DICOMweb must not be added before DIMSE archive workflows are stable unless
+  the roadmap is explicitly reprioritized.
+- QIDO-RS should use the same metadata index as C-FIND where possible.
+- WADO-RS/WADO-URI should use the same storage abstraction as C-MOVE.
+- STOW-RS should share validation and storage rules with C-STORE SCP where
+  possible.
 
 ### C-FIND
 

@@ -2,10 +2,11 @@
 
 ## Purpose
 
-VNA is a C++17 Vendor Neutral Archive learning and implementation project.
-The long-term goal is to implement core DICOM archive workflows similar in
-scope to a small subset of DCM4CHEE: receive, store, index, query, and retrieve
-DICOM studies over standard DICOM networking.
+VNA is a C++17 Vendor Neutral Archive / PACS Engine project.
+The final product target is a full archive platform that can receive, store,
+index, query, retrieve, expose, audit, secure, monitor, and operate DICOM
+studies across standard DICOM, DICOMweb, storage, database, worklist, and
+deployment workflows.
 
 The project is intentionally built in small milestones so that each layer can
 be reviewed, tested, and kept independent from unrelated infrastructure.
@@ -39,6 +40,52 @@ The MVP target is a small DICOM archive node that can:
 
 The MVP is not intended to be a production PACS replacement. It is a clean,
 reviewable, protocol-focused implementation of the core archive path.
+
+## Final Product Scope
+
+The final product scope includes the complete long-term target described by the
+RTM/SKS documents. These items are part of the intended end state even when they
+are not implemented yet.
+
+Final DICOM DIMSE scope:
+
+- C-ECHO SCU and SCP;
+- C-STORE SCP receiver;
+- C-STORE SCU sender;
+- C-FIND SCP;
+- C-MOVE SCP;
+- C-GET SCP if prioritized after the MVP retrieve workflow;
+- MPPS N-CREATE and N-SET;
+- Storage Commitment N-ACTION and N-EVENT-REPORT;
+- transfer syntax negotiation, including common uncompressed and compressed
+  radiology transfer syntaxes;
+- common radiology Storage SOP Classes, including CT, MR, CR, DX, US, PET,
+  Secondary Capture, Structured Report, and Presentation State as the supported
+  SOP Class list is expanded.
+
+Final archive platform scope:
+
+- local filesystem storage;
+- MinIO/S3 object storage;
+- deterministic object layout;
+- metadata indexing;
+- PostgreSQL persistence;
+- Redis/Celery-style asynchronous processing where needed;
+- study, series, and instance query/retrieve workflows;
+- audit trail for DICOM, system, and user events;
+- AE title whitelist and security policy enforcement;
+- DICOM TLS;
+- DICOMweb: QIDO-RS, WADO-URI, WADO-RS, and STOW-RS;
+- MWL / HL7 workflow integration;
+- FHIR ImagingStudy if prioritized in the final integration scope;
+- internal HTTP API;
+- admin panel;
+- RBAC and authentication;
+- monitoring/watchdog/alerting;
+- Docker/production deployment;
+- performance/load/regression test suite;
+- DICOM Conformance Statement;
+- RTM, SKS/TITCK/KVKK/IHE-oriented compliance evidence.
 
 ## Current Implemented Scope
 
@@ -102,19 +149,16 @@ The roadmap currently lists the following planned milestones after C-ECHO:
 - Milestone 09: C-FIND SCP;
 - Milestone 10: C-MOVE SCP.
 
-Advanced features are listed as future work only:
+The externally provided RTM/SKS documents add the broader final product scope:
+security, audit, Storage Commitment, DICOMweb, Worklist/HL7/FHIR, admin UI,
+internal APIs, MinIO, PostgreSQL, Redis/Celery-style processing,
+infrastructure, performance, and compliance evidence. These items are part of
+the final target, but they are not implemented in the current repository yet.
 
-- DICOMweb;
-- Storage Commitment;
-- MWL / HL7;
-- MinIO;
-- PostgreSQL;
-- production deployment.
+## Milestone-Gated Work
 
-## Explicit Non-Goals
-
-The following must not be added before their own milestone explicitly requires
-them:
+The following are final-scope items, but they must not be added before their own
+milestone or explicit implementation task:
 
 - UI;
 - Redis;
@@ -127,7 +171,21 @@ them:
 - Storage Commitment;
 - production authentication or authorization;
 - cloud deployment automation;
-- fake DICOM success responses.
+
+## True Non-Goals
+
+The following are not acceptable at any stage:
+
+- fake DICOM success responses;
+- claiming a DICOM operation succeeded without a real protocol response;
+- claiming SKS/TITCK/KVKK/IHE compliance without implementation and evidence;
+- copying external RTM completion statuses into this repository without matching
+  code and tests.
+
+The current repository must not claim SKS/TITCK/KVKK/IHE compliance. The
+attached RTM/SKS documents are useful target inputs, but current status must be
+derived from the actual source tree and tests. See `docs/RTM_SCOPE_ASSESSMENT.md`
+and `docs/COMPLIANCE_SCOPE.md`.
 
 The project must not claim success for a DICOM operation unless the real DICOM
 protocol exchange produced that result.

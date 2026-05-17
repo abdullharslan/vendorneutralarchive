@@ -187,11 +187,12 @@ Tradeoffs:
 - Milestone order matters: C-STORE SCP, storage, and indexing must be designed
   together carefully so protocol code does not become the storage layer.
 
-## Current Known Uncertainty
+## Planning Note
 
-The roadmap lists C-STORE SCP before local storage, while the Milestone 05 notes
-mention saving through `IObjectStorage`. No `IObjectStorage` type exists yet in
-the current source tree. The next implementation milestone should resolve this
-explicitly by either introducing the minimal storage abstraction needed by the
-C-STORE SCP milestone or by completing local storage before the receiver stores
-instances.
+The roadmap keeps C-STORE SCP as Milestone 05 and local storage hardening as
+Milestone 06. To avoid protocol code becoming storage code, Milestone 05 is
+allowed to introduce only the minimal storage abstraction required for C-STORE
+SCP persistence. Milestone 06 then completes and tests the local storage layer.
+
+No MinIO, PostgreSQL, Redis, audit, DICOMweb, or UI dependency should be added
+as part of that handoff.

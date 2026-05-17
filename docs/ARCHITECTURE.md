@@ -8,8 +8,9 @@ standard DICOM networking, comparable in spirit to DCM4CHEE.
 
 The codebase follows a layered architecture. Each layer has a single
 responsibility, depends only on layers below it, and is built up over the
-roadmap milestones. Milestone 00 only establishes the empty skeleton; layers
-become populated by the milestones that follow.
+roadmap milestones. The current implementation includes the foundation,
+domain models, configuration parsing, DICOM file reading, and C-ECHO SCU.
+Archive storage, indexing, query, and retrieve workflows are still planned.
 
 ## Layers
 
@@ -35,8 +36,11 @@ become populated by the milestones that follow.
 CLI and service entrypoints. Wire configuration, logging, and one or more use
 cases into a runnable binary. Contain no business logic.
 
-- `apps/vna-receiver`: future C-STORE SCP service entrypoint.
-- `apps/vna-send`: future C-ECHO / C-STORE SCU entrypoint.
+- `apps/vna-receiver`: planned C-STORE SCP service entrypoint. Currently
+  parses configuration and does not listen for DICOM associations.
+- `apps/vna-send`: C-ECHO SCU and planned C-STORE SCU entrypoint. Current
+  `--echo-only` mode performs a real C-ECHO; non-echo mode does not send
+  C-STORE yet.
 
 ### src/domain
 
@@ -97,8 +101,12 @@ and indexing components together.
 
 ## Out of scope until their milestone
 
-DICOM networking, storage, indexing, UI, Redis, Celery, MinIO, PostgreSQL,
-DICOMweb, HL7, C-FIND, C-MOVE, and Storage Commitment are explicitly out of
-scope until the milestone that introduces them. Milestone 00 ships only the
-folder skeleton, the CMake setup, and two placeholder executables that
-acknowledge the absence of DICOM functionality.
+Storage, indexing, UI, Redis, Celery, MinIO, PostgreSQL, DICOMweb, HL7,
+C-STORE, C-FIND, C-MOVE, C-GET, MPPS, and Storage Commitment are explicitly
+out of scope until the milestone that introduces them. C-ECHO SCU is the only
+implemented DICOM networking operation at this point.
+
+The external RTM/SKS documents describe the broader final target system. They
+are tracked as final-scope planning inputs in `docs/RTM_SCOPE_ASSESSMENT.md`
+and `docs/COMPLIANCE_SCOPE.md`; they do not change the current implemented
+scope until corresponding code and tests exist.
