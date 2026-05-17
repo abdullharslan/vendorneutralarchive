@@ -18,6 +18,26 @@ target_link_libraries(send_config_validation PRIVATE vna_config)
 add_test(NAME send_config_validation
          COMMAND send_config_validation)
 
+add_executable(local_instance_storage_validation
+    local_instance_storage_validation.cpp
+)
+
+target_compile_features(local_instance_storage_validation PRIVATE cxx_std_17)
+target_link_libraries(local_instance_storage_validation PRIVATE vna_storage)
+
+add_test(NAME local_instance_storage_validation
+         COMMAND local_instance_storage_validation)
+
+add_executable(dicom_uid_validation
+    dicom_uid_validation.cpp
+)
+
+target_compile_features(dicom_uid_validation PRIVATE cxx_std_17)
+target_link_libraries(dicom_uid_validation PRIVATE vna_domain)
+
+add_test(NAME dicom_uid_validation
+         COMMAND dicom_uid_validation)
+
 find_program(DUMP2DCM_EXECUTABLE dump2dcm)
 if(NOT DUMP2DCM_EXECUTABLE)
     message(FATAL_ERROR

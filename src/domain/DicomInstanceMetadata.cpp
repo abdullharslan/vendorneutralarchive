@@ -1,6 +1,7 @@
 #include "domain/DicomInstanceMetadata.h"
 
-#include <cctype>
+#include "domain/DicomUid.h"
+
 #include <stdexcept>
 #include <string>
 #include <utility>
@@ -9,31 +10,12 @@ namespace vna::domain {
 
 namespace {
 
-bool isValidUid(const std::string& uid) {
-    if (uid.empty() || uid.size() > 64) {
-        return false;
-    }
-    if (uid.front() == '.' || uid.back() == '.') {
-        return false;
-    }
-    for (std::size_t i = 0; i < uid.size(); ++i) {
-        const char c = uid[i];
-        if (!(std::isdigit(static_cast<unsigned char>(c)) || c == '.')) {
-            return false;
-        }
-        if (c == '.' && i + 1 < uid.size() && uid[i + 1] == '.') {
-            return false;
-        }
-    }
-    return true;
-}
-
-void requireValidUid(const std::string& uid, const char* field) {
-    if (!isValidUid(uid)) {
+void requireValidUidField(const std::string& uid, const char* field) {
+    try {
+        requireValidDicomUid(uid, field);
+    } catch (const std::invalid_argument& e) {
         throw std::invalid_argument(
-            std::string{"DicomInstanceMetadata "} + field +
-            " must be a valid DICOM UID (1-64 chars, digits and dots only,"
-            " no leading or trailing dot, no empty components)");
+            std::string{"DicomInstanceMetadata "} + e.what());
     }
 }
 
@@ -60,10 +42,10 @@ DicomInstanceMetadata::DicomInstanceMetadata(
       seriesInstanceUid_(std::move(seriesInstanceUid)),
       patientId_(std::move(patientId)),
       modality_(std::move(modality)) {
-    requireValidUid(sopInstanceUid_, "SOP Instance UID");
-    requireValidUid(sopClassUid_, "SOP Class UID");
-    requireValidUid(studyInstanceUid_, "Study Instance UID");
-    requireValidUid(seriesInstanceUid_, "Series Instance UID");
+    requireValidUidField(sopInstanceUid_,    "SOP Instance UID");
+    requireValidUidField(sopClassUid_,       "SOP Class UID");
+    requireValidUidField(studyInstanceUid_,  "Study Instance UID");
+    requireValidUidField(seriesInstanceUid_, "Series Instance UID");
     requireNonEmpty(modality_, "Modality");
 }
 

@@ -4,6 +4,7 @@ add_library(vna_domain STATIC
     DicomNode.cpp
     DicomFile.cpp
     DicomInstanceMetadata.cpp
+    DicomUid.cpp
     EchoResult.cpp
     StoreResult.cpp
 )
