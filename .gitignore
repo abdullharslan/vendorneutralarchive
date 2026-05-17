@@ -1,0 +1,59 @@
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+__MACOSX/
+
+# CMake build directories
+build/
+build-*/
+cmake-build-*/
+
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+CMakeConfigureLog.yaml
+CMakeScratch/
+compile_commands.json
+
+# Generated makefiles
+Makefile
+
+# CTest / test output
+Testing/
+LastTest.log
+CTestCostData.txt
+
+# Compiled object / dependency files
+*.o
+*.obj
+*.lo
+*.d
+*.o.d
+
+# Static / dynamic libraries
+*.a
+*.lib
+*.so
+*.dylib
+*.dll
+
+# Executables / binary outputs
+*.exe
+*.out
+*.app
+bin/
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp

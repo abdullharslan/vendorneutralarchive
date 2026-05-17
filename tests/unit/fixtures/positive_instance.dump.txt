@@ -1,0 +1,19 @@
+# Dicom-File-Format
+
+# Dicom-Meta-Information-Header
+# Used TransferSyntax: Little Endian Explicit
+(0002,0001) OB 00\01                                    #   2, 1 FileMetaInformationVersion
+(0002,0002) UI [1.2.840.10008.5.1.4.1.1.7]              #  26, 1 MediaStorageSOPClassUID
+(0002,0003) UI [1.2.3.4.5.6.7.8.9.0]                    #  20, 1 MediaStorageSOPInstanceUID
+(0002,0010) UI [1.2.840.10008.1.2.1]                    #  20, 1 TransferSyntaxUID
+(0002,0012) UI [1.2.276.0.7230010.3.0.3.6.0]            #  28, 1 ImplementationClassUID
+(0002,0013) SH [VNA_TEST_FIXTURE]                       #  16, 1 ImplementationVersionName
+
+# Dicom-Data-Set
+# Used TransferSyntax: Little Endian Explicit
+(0008,0016) UI [1.2.840.10008.5.1.4.1.1.7]              #  26, 1 SOPClassUID
+(0008,0018) UI [1.2.3.4.5.6.7.8.9.0]                    #  20, 1 SOPInstanceUID
+(0008,0060) CS [SC]                                     #   2, 1 Modality
+(0010,0020) LO []                                       #   0, 1 PatientID
+(0020,000d) UI [1.2.3.4.5.6.7.8.9.1]                    #  20, 1 StudyInstanceUID
+(0020,000e) UI [1.2.3.4.5.6.7.8.9.2]                    #  20, 1 SeriesInstanceUID
